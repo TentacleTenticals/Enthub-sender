@@ -1,23 +1,9 @@
+import 'dotenv/config';
 import {connectDD} from './apps/discord/mjs.js';
 import {Tg} from './apps/telegram/mjs.js';
 
 function run(o){
   console.log('[Run] Запуск...');
-
-  function sender(o){
-    console.log('[Sender] Launched!');
-
-    const promises = [];
-    o.list.forEach(e => {
-      promises.push(
-        apps[e](o.cmd)
-      )
-    })
-
-    Promise.all(promises).then(
-      result => console.log('[Sender] Completed!!!')
-    )
-  }
   
   connectDD({
     ss: {},
