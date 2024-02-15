@@ -5,9 +5,8 @@ export function msgBuilder(o){
 
   function replace(o){
     return `${o.template}
-    ${o.text.replace(/(\.|!|-)/gmi, '\\$1')}`
+    ${o.text.replace(/([_\*\[\]()~\`>#+-=\|{}.!])/gmi, '\\$1')}`
   }
-
   switch(o.app){
     case 'Discord':
       // switch(o.data.chType){
