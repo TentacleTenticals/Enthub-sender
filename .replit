@@ -1,0 +1,4 @@
+#language="html"
+run = "node main"
+[nix]
+channel = "stable-21_11"
