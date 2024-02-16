@@ -4,8 +4,9 @@ export function msgBuilder(o){
   console.log('[MSG Builder]', o);
 
   function replace(o){
+    const filter = /([_\*\[\]()~\`>#+-=\|{}.!])/gmi;
     return `${o.template}
-    ${o.text.replace(/([_\*\[\]()~\`>#+-=\|{}.!])/gmi, '\\$1')}`
+    ${o.text.replace(filter, '\\$1')}`
   }
   switch(o.app){
     case 'Discord':
@@ -18,8 +19,7 @@ export function msgBuilder(o){
         text: o.data.msg.text});
 
       sender({
-        sendToApps: o.builder.sendToApps,
-        appsCfg: o.builder.appsCfg,
+        apps: o.builder.apps,
         msg: {
           chType: o.data.chType,
           text: o.text

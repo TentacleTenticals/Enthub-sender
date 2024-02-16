@@ -7,11 +7,6 @@ function run(o){
   
   connectDD({
     ss: {},
-    cfg: {
-      guildId: '1207338107809042433',
-      channelId: ['1207338108543303742'],
-      authorId: ['1166002116096163872']
-    },
     que: {
       d: {
         token: process.env['discordToken'],
@@ -30,29 +25,31 @@ function run(o){
 
 run({
   builder: {
-    sendToApps: ['TG'],
-    appsCfg: {
-      DiscordWSS: {
-        guildsId: ['1207338107809042433'],
-        channelsId: {
-          news: ['1207710517787885588'],
-          updates: ['1207710607529484318'],
-          feeds: ['1207710655990472915']
+    apps: {
+      sendTo: ['TG'],
+      cfg: {
+        DiscordWSS: {// Discord WSS
+          guildsId: ['1207338107809042433'],
+          channelsId: {// Каналы. Можно добавлять типы
+            news: ['1207710517787885588'],
+            updates: ['1207710607529484318'],
+            feeds: ['1207710655990472915']
+          },
+          authorsId: ['1166002116096163872']
         },
-        authorsId: ['1166002116096163872']
-      },
-      TG: {
-        run: 'msgSend',
-        channelsId: {
-          news: ['30'],
-          updates: ['34'],
-          feeds: ['30']
-        },
-        chatId: '-1002104291393'
+        TG: {// Telegram
+          run: 'msgSend',
+          channelsId: {// Каналы. Можно добавлять типы
+            news: ['30'],
+            updates: ['34'],
+            feeds: ['30']
+          },
+          chatId: '-1002104291393'
+        }
       }
     },
     msg: {
-      templates: {
+      templates: {// Шаблоны сообщений
         news: `Новинка\\!`,
         updates: `Обновление\\!`,
         feeds: `Новый фид\\!`

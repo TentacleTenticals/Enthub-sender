@@ -1,21 +1,12 @@
 import WebSocket from 'ws';
-// import {sender} from '../../func/sender.js';
 import {msgBuilder} from '../../func/msgBuilder.js';
-
-
-// const Discord = {
-//   connect: function(){
-//     ''
-//   }
-// }
 
 export function eventsRun(o){
   o.ws.on('open', (e) => {
     console.log(`[DD WSS] ${!o.ss.resumeUrl ? 'Opened':'Reopened'}`);
     if(!o.ss.resumeUrl) o.ws.send(JSON.stringify({...o.que, op:2}));
     else
-
-    o.ws.send(JSON.stringify({
+    o.ws.send(JSON.stringify({// Перезапуск сессии
       op: 6,
       d: {
         token: o.que.d.token,
@@ -32,7 +23,6 @@ export function eventsRun(o){
   })
   o.ws.on('close', (e) => {
     console.log('[DD WSS] Closed! Code:', e);
-    // console.log('Closed', o.ws);
     clearInterval(o.timer);
     connectDD(o);
   });
@@ -40,15 +30,14 @@ export function eventsRun(o){
     console.log('[DD WSS] Error!', e);
   })
 
-  o.ws.addEventListener('message', function(e) {
+  o.ws.addEventListener('message', (e) => {
     const data = JSON.parse(e.data);
-
-    // console.log(data.op);
 
     switch(data.op){
       case 0:
         // console.log('[DD WSS] OP 0');
         if(data.s) o.ss.s = data.s;
+        // Далее идёт код для перезапуска сессии, но он не работает.
         // if(data.d){
         //   if(data.d.session_id) o.ss.sessionId = data.d.session_id;
         //   if(data.d.resume_gateway_url) o.ss.resumeUrl = data.d.resume_gateway_url;
@@ -57,7 +46,7 @@ export function eventsRun(o){
         // console.log('[DD WSS] OP 6, resume');
       break;
       case 7:
-        console.log('[DD WSS] OP 7');
+        // console.log('[DD WSS] OP 7');
       break;
       case 10:
         console.log('[DD WSS] Beat started');
@@ -70,16 +59,15 @@ export function eventsRun(o){
       break;
     }
 
-    switch (data.t) {
+    switch (data.t){
       case "MESSAGE_CREATE":
-        let chCheck;
-        if(!o.builder.appsCfg.DiscordWSS.guildsId.includes(data.d.guild_id)) return;
-        // if(!o.builder.appsCfg.DiscordWSS.channelsId.includes(data.d.channel_id)) return;
-        for(let i in o.builder.appsCfg.DiscordWSS.channelsId){
-if(o.builder.appsCfg.DiscordWSS.channelsId[i].includes(data.d.channel_id)) chCheck = i;
+        let channelType;
+        if(!o.builder.apps.cfg.DiscordWSS.guildsId.includes(data.d.guild_id)) return;
+        for(let i in o.builder.apps.cfg.DiscordWSS.channelsId){
+if(o.builder.apps.cfg.DiscordWSS.channelsId[i].includes(data.d.channel_id)) channelType = i;
         }
-        if(!chCheck) return;
-        if(!o.builder.appsCfg.DiscordWSS.authorsId.includes(data.d.author.id)) return;
+        if(!channelType) return;
+        if(!o.builder.apps.cfg.DiscordWSS.authorsId.includes(data.d.author.id)) return;
         const m = {
           guildId: data.d.guild_id,
           channelId: data.d.channel_id,
@@ -91,12 +79,7 @@ if(o.builder.appsCfg.DiscordWSS.channelsId[i].includes(data.d.channel_id)) chChe
         };
         console.log('[DD WSS] New msg!', m);
 
-        msgBuilder({app:'Discord', builder:o.builder, data:{...m, chType:chCheck}});
-        // sender({...o.senderCfg,
-        //   msg: m.msg,
-        //   text: `${o.senderCfg.msgTemplates.news}
-        //   ${m.msg.text}`
-        // });
+        msgBuilder({app:'Discord', builder:o.builder, data:{...m, chType:channelType}});
         // o.ws.close()
         // o.ws.send(JSON.stringify({ op: 7, d: null }));
       break;
