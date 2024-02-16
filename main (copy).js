@@ -51,19 +51,30 @@ run({
     msg: {
       templates: {// Шаблоны сообщений
         news: {
-          TG:(o) => `Новая ${o.link && `[новость](${o.link})`||'новость\\!'}
-          ${o.text}`
+          TG:`**Новинка\\!**`
         },
         updates: {
-          TG:(o) => `Новое ${o.link && `[обновление](${o.link})`||'обновление\\!'}
-          ${o.text}`
+          TG:`Обновление\\!`
         },
         feeds: {
-          TG:(o) => `Новый ${o.link && `[фид](${o.link})`||'фид\\!'}
-          ${o.text}`
+          TG:`Новый фид\\!`
         }
       },
       data: {}
     }
   }
 });
+// sender({
+//   list: ['TG', 'Discord'],
+//   cmd: {
+//       url: 'https://...',
+//       title: 'Title',
+//       text: 'Text'
+//   }
+// })
+
+// Tg.fetch({
+//  run: 'msgSend',
+//  chatId: '-1002104291393',
+//  text: 'Test'
+// })

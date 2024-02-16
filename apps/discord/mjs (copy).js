@@ -1,5 +1,5 @@
 import WebSocket from 'ws';
-import {sender} from '../../func/sender.js';
+import {msgBuilder} from '../../func/msgBuilder.js';
 
 export function eventsRun(o){
   o.ws.on('open', (e) => {
@@ -74,13 +74,12 @@ if(o.builder.apps.cfg.DiscordWSS.channelsId[i].includes(data.d.channel_id)) chan
           author: data.d.author,
           msg: {
             text: data.d.content,
-            attachments: data.d.attachments,
-            chType: channelType
+            attachments: data.d.attachments
           }
         };
         console.log('[DD WSS] New msg!', m);
 
-        sender({app:'Discord', builder:o.builder, data:m});
+        msgBuilder({app:'Discord', builder:o.builder, data:{...m, chType:channelType}});
         // o.ws.close()
         // o.ws.send(JSON.stringify({ op: 7, d: null }));
       break;
