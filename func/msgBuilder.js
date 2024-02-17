@@ -10,6 +10,7 @@ export function msgBuilder(o){
   const r = {
     fs: {
       TG: /([_\*\[\]()~\`>#+-=\|{}.!])/gmi,
+      Discord: /([_\*\[\]()~\`>#+-=\|{}.!])/gmi,
       linkCheck: /(http[s]*:\/\/[^ ]+)/gm,
       main: false
     },
@@ -30,10 +31,24 @@ export function msgBuilder(o){
   // }
   switch(o.app){
     case 'TG':
-      o.msg.text = o.templates[o.msg.chType][o.app]({
+      o.msg.text = o.templates[o.msg.chType][o.app].text({
         link:o.msg.link,
         text:r.clearText(o.msg.text)
       });
+      o.msg.cfg = o.templates[o.msg.chType][o.app].cfg;
+
+      return o.msg;
+    break;
+    case 'Discord':
+      o.msg.text = o.templates[o.msg.chType][o.app].text({
+        link:o.msg.link,
+        text:r.clearText(o.msg.text)
+      });
+      o.msg.embeds = o.templates[o.msg.chType][o.app].embeds({
+        link:o.msg.link,
+        text:o.msg.text
+      });
+      o.msg.cfg = o.templates[o.msg.chType][o.app].cfg;
 
       return o.msg;
     break;
