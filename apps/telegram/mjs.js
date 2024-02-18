@@ -10,7 +10,10 @@ export function Tg(o){
         chat_id: o.data.chatId,
         message_thread_id: o.data.channelId,
         parse_mode: 'MarkdownV2',
-        text: o.data.msg.text
+        text: o.data.msg.text,
+        reply_markup: {
+          inline_keyboard: o.data.msg.buttons,
+        }
       }
     break;
   }

@@ -72,10 +72,17 @@ run({
             attachments: '',
             text: (o) => `Новая ${o.link && `[новость](${o.link})`||'новость\\!'}
               ${o.text}`,
+            buttons: (o) => [
+              [{
+                text: 'Ссылка',
+                url: o.url
+              }]
+            ],
             cfg: {
               text: true,
               delLinks: true,
-              embeds: false
+              embeds: false,
+              buttons: true
             }
           },
           Discord: {
@@ -100,10 +107,17 @@ run({
             attachments: '',
             text: (o) => `Новое ${o.link && `[обновление](${o.link})`||'обновление\\!'}
               ${o.text}`,
+            buttons: (o) => [
+              [{
+                text: 'Ссылка',
+                url: o.url
+              }]
+            ],
             cfg: {
               text: true,
               delLinks: true,
-              embeds: false
+              embeds: false,
+              buttons: true
             }
           },
           Discord: {
@@ -129,10 +143,17 @@ run({
             attachments: '',
             text: (o) => `Новый ${o.link && `[фид](${o.link})`||'фид\\!'}
               ${o.text}`,
+            buttons: (o) => [
+              [{
+                text: 'Ссылка',
+                url: o.url
+              }]
+            ],
             cfg: {
               text: true,
               delLinks: true,
-              embeds: false
+              embeds: false,
+              buttons: true
             }
           },
           Discord: {

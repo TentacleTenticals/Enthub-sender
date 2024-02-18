@@ -40,6 +40,9 @@ export function msgBuilder(o){
         link:o.msg.link,
         text:r.clearText(o.msg.cfg.delLinks && r.delLinks(o.msg.text)||o.msg.text)
       });
+      o.msg.buttons = o.msg.cfg.buttons && o.templates[o.msg.chType][o.app].buttons({
+        url:o.msg.link
+      })||[];
 
       return o.msg;
     break;
