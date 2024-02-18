@@ -4,7 +4,6 @@ import {msgBuilder} from './msgBuilder.js';
 
 export function sender(o){
   const promises = [];
-  console.log(`[Sender] Запущен! Будет отправлено в ${o.builder.apps.sendTo.length} приложений: [${o.builder.apps.sendTo}].`);
 
   const apps = {
     TG: Tg,
@@ -35,6 +34,8 @@ export function sender(o){
     //   apps[e]({...o, app:e, ...o.msg, channelId: o.appsCfg[e].channelsId[o.msg.chType]})
     // )
   })
+
+  console.log(`[Sender] Запущен! Будет отправлено в ${promises} приложений: [${promises}].`);
 
   Promise.all(promises).then(
     result => console.log('[Sender] Завершено!!!')

@@ -11,7 +11,7 @@ export function msgBuilder(o){
     fs: {
       TG: /([_\*\[\]()~\`>#+-=\|{}.!])/gmi,
       Discord: /([_\*\[\]()~\`>#+-=\|{}.!])/gmi,
-      linkCheck: /(http[s]*:\/\/[^ ]+)/gm,
+      linkCheck: /(http[s]*:\/\/[^ ]+)/gmi,
       main: false
     },
     getLink: function(text){
@@ -21,6 +21,9 @@ export function msgBuilder(o){
     },
     clearText: function(text){
       return text.replace(this.fs[o.app], '\\$1');
+    },
+    delLinks: function(text){
+      return text.replace(this.fs.linkCheck, '');
     }
   }
 
@@ -29,26 +32,27 @@ export function msgBuilder(o){
   // function replace(o){
   //   return o.text.replace(o.filter, '\\$1')
   // }
+  o.msg.cfg = o.templates[o.msg.chType][o.app].cfg;
   switch(o.app){
     case 'TG':
+      o.msg.defText = o.msg.text;
       o.msg.text = o.templates[o.msg.chType][o.app].text({
         link:o.msg.link,
-        text:r.clearText(o.msg.text)
+        text:r.clearText(o.msg.cfg.delLinks && r.delLinks(o.msg.text)||o.msg.text)
       });
-      o.msg.cfg = o.templates[o.msg.chType][o.app].cfg;
 
       return o.msg;
     break;
     case 'Discord':
+      o.msg.defText = o.msg.text;
       o.msg.text = o.templates[o.msg.chType][o.app].text({
         link:o.msg.link,
-        text:r.clearText(o.msg.text)
+        text:r.clearText(o.msg.cfg.delLinks && r.delLinks(o.msg.text)||o.msg.text)
       });
       o.msg.embeds = o.templates[o.msg.chType][o.app].embeds({
         link:o.msg.link,
-        text:o.msg.text
+        text:o.msg.cfg.delLinks && r.delLinks(o.msg.defText)
       });
-      o.msg.cfg = o.templates[o.msg.chType][o.app].cfg;
 
       return o.msg;
     break;

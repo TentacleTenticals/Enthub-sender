@@ -14,6 +14,21 @@ export function Discord(o){
         allowed_mentions: o.data.msg.mentions,
       }
     break;
+    case 'addForum':
+      o.type = `channels/${o.data.channelId}/threads`;
+      o.method = 'POST';
+      o.d = {
+        name: o.data.name,
+        message: {
+          content: o.data.msg.text,
+          attachments: o.data.msg.attachments,
+          embeds: o.data.msg.embeds,
+          sticker_ids: o.data.msg.stickers,
+          allowed_mentions: o.data.msg.mentions,
+        },
+        applied_tags: o.data.msg.tags
+      }
+    break;
   }
   return axios(`https://discord.com/api/v10/${o.type}`, {
     headers: {

@@ -23,6 +23,7 @@ function run(o){
     msg: o.msg
   });
 }
+function qrun(){};
 
 run({
   builder: {
@@ -73,6 +74,7 @@ run({
               ${o.text}`,
             cfg: {
               text: true,
+              delLinks: true,
               embeds: false
             }
           },
@@ -87,6 +89,7 @@ run({
             }]),
             cfg: {
               text: true,
+              delLinks: true,
               embeds: false
             }
           }
@@ -96,7 +99,12 @@ run({
             link: '',
             attachments: '',
             text: (o) => `Новое ${o.link && `[обновление](${o.link})`||'обновление\\!'}
-              ${o.text}`
+              ${o.text}`,
+            cfg: {
+              text: true,
+              delLinks: true,
+              embeds: false
+            }
           },
           Discord: {
             link: '',
@@ -110,6 +118,7 @@ run({
             }]),
             cfg: {
               text: true,
+              delLinks: true,
               embeds: false
             }
           }
@@ -119,7 +128,12 @@ run({
             link: '',
             attachments: '',
             text: (o) => `Новый ${o.link && `[фид](${o.link})`||'фид\\!'}
-              ${o.text}`
+              ${o.text}`,
+            cfg: {
+              text: true,
+              delLinks: true,
+              embeds: false
+            }
           },
           Discord: {
             link: '',
@@ -132,6 +146,7 @@ run({
             }]),
             cfg: {
               text: true,
+              delLinks: true,
               embeds: false
             }
           }
@@ -144,9 +159,11 @@ run({
 
 // Discord({
 //   data: {
-//     run: 'msgSend',
+//     run: 'addForum',
+//     name: 'Forum',
+//     channelId: '1208712322831351839',
 //     msg: {
-//       text: 'Test, <@1166002116096163872>',
+//       text: 'Test',
 //       embeds: [
 //         {
 //           title: 'Embeddd',
@@ -159,8 +176,7 @@ run({
 //         parse: ['users', 'roles']
 //       }
 //     }
-//   },
-//   channelId: '1207338108543303742',
+//   }
 // }).then(
 //   res => console.log(`[${res.app}] ${res.process} ${res.status}`, res.data),
 //     err => console.log(`[${res.app}] ${res.process} ${res.status}`, res.data)
